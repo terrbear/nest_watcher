@@ -20,8 +20,8 @@ class NestReport
 
     devices.first.tap do |device|
       if stats_enabled?
-        StatHat::API.ez_post_value("#{device.name} temperature", credentials['stathat']['key'], device.weather.temperature)
-        StatHat::API.ez_post_value("#{device.name} humidity", credentials['stathat']['key'], device.weather.humidity)
+        StatHat::API.ez_post_value("temperature", credentials['stathat']['key'], device.weather.temperature)
+        StatHat::API.ez_post_value("humidity", credentials['stathat']['key'], device.weather.humidity)
       end
     end
 
