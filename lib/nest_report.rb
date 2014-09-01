@@ -16,11 +16,10 @@ class NestReport
 
   def report
     devices = self.devices.map{|id, device| Nest.new(id, self.status)}
-    #Headers: ID, Name, Temperature, Target Temperature, Running, Zip, Outdoor Temperature, Humidity
+    #Headers: ID, Name, Temperature, Target Temperature, Running, Zip, Outdoor Temperature, Humidity, Time
 
     devices.first.tap do |device|
       if stats_enabled?
-        puts "enabled!"
         StatHat::API.ez_post_value("#{device.name} temperature", credentials['stathat']['key'], device.weather.temperature)
         StatHat::API.ez_post_value("#{device.name} humidity", credentials['stathat']['key'], device.weather.humidity)
       end
@@ -36,7 +35,8 @@ class NestReport
         device.on?,
         device.zip,
         device.weather.temperature,
-        device.weather.humidity
+        device.weather.humidity,
+        Time.now
       ].join(", ")
     end.join("\n")
   end
