@@ -50,11 +50,9 @@ class Nest
 
   def report!
     if self.on?
-      puts "Stat'ing that we're on"
       StatHat::API.ez_post_count("#{self.name} on", credentials['stathat']['key'], 1)
     end
 
-    puts "Stat'ing delta"
     StatHat::API.ez_post_value("#{self.name} delta", credentials['stathat']['key'], (self.target_temperature - self.temperature).abs)
   end
 

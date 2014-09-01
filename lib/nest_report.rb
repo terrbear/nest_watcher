@@ -19,7 +19,6 @@ class NestReport
     header = "ID, Name, Temperature, Target Temperature, Running, Zip, Outdoor Temperature, Humidity"
 
     devices.first.tap do |device|
-      puts "Stat'ing temp"
       StatHat::API.ez_post_value("#{device.name} temperature", credentials['stathat']['key'], device.weather.temperature)
       StatHat::API.ez_post_value("#{device.name} humidity", credentials['stathat']['key'], device.weather.humidity)
     end
