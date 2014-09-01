@@ -9,6 +9,10 @@ def credentials
   YAML.load(erb)
 end
 
+def stats_enabled?
+  !!credentials['stathat']['enabled']
+end
+
 Dir[File.join(File.expand_path(File.dirname(__FILE__)), "lib", "*.rb")].each do |file|
   require file
 end

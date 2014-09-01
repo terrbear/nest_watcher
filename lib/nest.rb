@@ -49,11 +49,13 @@ class Nest
   end
 
   def report!
-    if self.on?
-      StatHat::API.ez_post_count("#{self.name} on", credentials['stathat']['key'], 1)
+    if stats_enabled?
+      if self.on?
+        StatHat::API.ez_post_count("#{self.name} on", credentials['stathat']['key'], 1)
+      end
+  
+      StatHat::API.ez_post_value("#{self.name} delta", credentials['stathat']['key'], (self.target_temperature - self.temperature).abs)
     end
-
-    StatHat::API.ez_post_value("#{self.name} delta", credentials['stathat']['key'], (self.target_temperature - self.temperature).abs)
   end
 
   private
