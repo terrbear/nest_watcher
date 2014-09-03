@@ -48,13 +48,18 @@ class Nest
     @lookup_table[device['where_id']]
   end
 
+  def delta
+    self.temperature - self.target_temperature
+  end
+
   def report!
     if stats_enabled?
       if self.on?
         StatHat::API.ez_post_count("#{self.name} on", credentials['stathat']['key'], 1)
       end
   
-      StatHat::API.ez_post_value("#{self.name} delta", credentials['stathat']['key'], (self.target_temperature - self.temperature).abs)
+      StatHat::API.ez_post_value("#{self.name} target temperature", credentials['stathat']['key'], self.target_temperature)
+      StatHat::API.ez_post_value("#{self.name} delta", credentials['stathat']['key'], self.delta)
     end
   end
 
