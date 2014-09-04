@@ -65,7 +65,7 @@ class Nest
 
   private
   def to_fahrenheit(celsius)
-    (celsius * (9/5.0)).to_i + 32
+    (celsius * (9/5.0)) + 32
   end
 end
 
